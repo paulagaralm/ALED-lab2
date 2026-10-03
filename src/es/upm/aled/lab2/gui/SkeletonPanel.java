@@ -43,6 +43,7 @@ public class SkeletonPanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		//código general
 		// Draws the window
 		super.paintComponent(g);
 		float originX = getWidth() / 2;
@@ -55,15 +56,17 @@ public class SkeletonPanel extends JPanel {
 		drawSkeleton(g, originX, originY, nodeRoot);
 	}
 
-	private void drawSkeleton(Graphics g, double parentX, double parentY, Node node) {
-		// TODO: Ponga comentarios en este método
-		g.fillOval((int) node.getX() - 4, (int) node.getY() - 4, 8, 8);
-		g.drawLine((int) parentX, (int) parentY, (int) node.getX(), (int) node.getY());
-		if (node.getChildren().size() == 0) {
-			return;
+	private void drawSkeleton(Graphics g, double parentX, double parentY, Node node) { //método recursivo
+		//caso base
+		g.fillOval((int) node.getX() - 4, (int) node.getY() - 4, 8, 8); //pinta un nodo pasando la posición y características
+		g.drawLine((int) parentX, (int) parentY, (int) node.getX(), (int) node.getY()); //pinta un segmento pasando por el nodo padre e hijo
+		//caso final
+		if (node.getChildren().size() == 0) { //si no hay más nodos hijos
+			return; //acaba de dibujar el esqueleto
 		}
-		for (Node child : node.getChildren()) {
-			drawSkeleton(g, node.getX(), node.getY(), child);
+		//paso recursivo
+		for (Node child : node.getChildren()) { //para cada nodo hijo
+			drawSkeleton(g, node.getX(), node.getY(), child); //dibuja las conexiones de dicho nodo
 		}
 	}
 }
