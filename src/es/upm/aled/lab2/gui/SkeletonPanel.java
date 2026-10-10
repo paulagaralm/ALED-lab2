@@ -57,10 +57,10 @@ public class SkeletonPanel extends JPanel {
 	}
 
 	private void drawSkeleton(Graphics g, double parentX, double parentY, Node node) { //método recursivo
-		//caso base
+		//código general
 		g.fillOval((int) node.getX() - 4, (int) node.getY() - 4, 8, 8); //pinta un nodo pasando la posición y características
 		g.drawLine((int) parentX, (int) parentY, (int) node.getX(), (int) node.getY()); //pinta un segmento pasando por el nodo padre e hijo
-		//caso final
+		//caso base
 		if (node.getChildren().size() == 0) { //si no hay más nodos hijos
 			return; //acaba de dibujar el esqueleto
 		}

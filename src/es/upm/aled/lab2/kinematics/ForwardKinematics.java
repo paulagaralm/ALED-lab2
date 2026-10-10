@@ -31,20 +31,26 @@ public class ForwardKinematics {
 
 	// Private helper method that implements the recursive algorithm
 	private static Node computePositions(Segment link, double baseX, double baseY, double accumulatedAngle) {
-		//caso base
-		Node nodoDeTurno = new Node(baseX, baseY); //nodo actual
+		//medida de tiempos
+		long startTime = System.nanoTime(); //instante de tiempo en el que comienza el método
+		
+		//código general
+		Node nodoDeTurno = new Node(baseX, baseY); //nodo actual al inicio del segmento
 		double anguloTotal = accumulatedAngle + link.getAngle(); //suma de todos los ángulos anteriores y el actual
 		double posicionX = nodoDeTurno.getX() + link.getLength()*Math.cos(anguloTotal); //posición del nodo nuevo en x
 		double posicionY = nodoDeTurno.getY() + link.getLength()*Math.sin(anguloTotal); //posición del nodo nuevo en y
-		Node siguienteNodo = new Node(posicionX, posicionY); //nodo nuevo
-		//caso final
-		if(link.getChildren().isEmpty()) { //si no hay segmentos hijos
-			return siguienteNodo; //devuelve el nodo nuevo
-		}
-		//paso recursivo
+		Node nodoSiguiente = new Node(posicionX, posicionY); //nodo nuevo al final del segmento
+		nodoDeTurno.addChild(nodoSiguiente); //se añade el nodo hijo a la lista del nodo padre
+		//paso recursivo y caso base
 		for(Segment segmento : link.getChildren()) { //para cada segmento hijo
-			computePositions(segmento, posicionX, posicionY, anguloTotal); //se llama a sí mismo
+			Node nodoHijoCalculado = computePositions(segmento, posicionX, posicionY, anguloTotal); //se llama a sí mismo
+			nodoSiguiente.addChild(nodoHijoCalculado); //se añade el nodo hijo a la lista del nodo padre
 		}
-		return siguienteNodo; //devuelve el nodo nuevo
+		
+		//medida de tiempos
+		long runningTime = System.nanoTime() - startTime; //calcula cuánto ha tardado en ejecutarse el método
+		System.out.println("Tiempo de computePositions para un segmento con " + link.getChildren().size() + " hijos: " + runningTime + " nanosegundos"); //muestra por pantalla dicho tiempo
+		
+		return nodoDeTurno; //devuelve el nodo raíz
 	}
 }
