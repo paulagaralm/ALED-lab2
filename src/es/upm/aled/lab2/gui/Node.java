@@ -33,16 +33,16 @@ public class Node {
 	 * @return The X coordinate.
 	 */
 	public double getX() {
-		return x;
+		return this.x;
 	}
 
 	/**
-	 * Returns the X coordinate.
+	 * Returns the Y coordinate.
 	 * 
-	 * @return The X coordinate.
+	 * @return The Y coordinate.
 	 */
 	public double getY() {
-		return y;
+		return this.y;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class Node {
 	 * @return A List of all the children Nodes.
 	 */
 	public List<Node> getChildren() {
-		return children;
+		return this.children;
 	}
 
 	/**
